@@ -6,9 +6,8 @@ var express = require('express');
 var app = express();
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
-// so that your API is remotely testable by FCC 
 var cors = require('cors');
-app.use(cors({ optionsSuccessStatus: 200 }));  // some legacy browsers choke on 204
+app.use(cors({ optionsSuccessStatus: 200 }));
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
@@ -26,48 +25,26 @@ app.get("/api/hello", function (req, res) {
 app.get("/api/:date?", (req, res) => {
   let input = req.params.date;
 
-  /*1.create variable for checking :  
-      a.isValidDate 
-        to check if input is string with valid date format -> 
-        if not valid date, it will return NaN 
-        example : 
-        -valid   : 2015-12-25, 
-        -invalid : 2015-02-31, 1451001600000
-  */
-  let isValidDate = Date.parse(input);
-
-  /*  b.isValidUnixNumber
-        to check if input is string with whole number(no symbol or character in the middle of input) -> 
-        it must be valid unix (source : https://benjaminsemah.com/build-timestamp-microservice)
-  */
-  let isValidUnixNumber = /^[0-9]+$/.test(input)
-
-  //  c.isEmpty to check there is nothing in input
-  let isEmpty = input == "" || input == null;
-
-  //3.create another variables used in if-else
-  let unix_output = 0;
-  let utc_output = "";
-
-  if (isValidDate) {
-    unix_output = new Date(input);
-    utc_output = unix_output.toUTCString();
-    // valueOf used for getting a variable back to primitive type
-    return res.json({ unix: unix_output.valueOf(), utc: utc_output });
+  // Case 1: Empty input → return current time
+  if (input === undefined || input === null || input === "") {
+    const now = new Date();
+    return res.json({ unix: now.valueOf(), utc: now.toUTCString() });
   }
-  else if (isNaN(isValidDate) && isValidUnixNumber) {
-    unix_output = new Date(parseInt(input));
-    utc_output = unix_output.toUTCString();
-    return res.json({ unix: unix_output.valueOf(), utc: utc_output });
+
+  // Case 2: Pure numeric string → treat as Unix timestamp (milliseconds)
+  if (/^-?[0-9]+$/.test(input)) {
+    const date = new Date(parseInt(input));
+    return res.json({ unix: date.valueOf(), utc: date.toUTCString() });
   }
-  else if (isEmpty) {
-    unix_output = new Date();
-    utc_output = unix_output.toUTCString();
-    return res.json({ unix: unix_output.valueOf(), utc: utc_output });
+
+  // Case 3: Date string → try to parse with new Date()
+  const date = new Date(input);
+  if (isNaN(date.getTime())) {
+    // Case 4: Invalid date
+    return res.json({ error: "Invalid Date" });
   }
-  else {
-    res.json({ error: "Invalid Date" });
-  }
+
+  return res.json({ unix: date.valueOf(), utc: date.toUTCString() });
 });
 
 // listen for requests :)
