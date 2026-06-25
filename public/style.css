@@ -1,44 +1,320 @@
+/* ============================
+   RESET & BASE
+   ============================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-dark: #0d1117;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.10);
+  --text-primary: #e6edf3;
+  --text-muted: #8b949e;
+  --text-code: #79c0ff;
+  --accent-orange: #ff7b72;
+  --accent-yellow: #d2a8ff;
+  --orb1: rgba(255, 123, 114, 0.12);
+  --orb2: rgba(210, 168, 255, 0.12);
+  --radius-card: 16px;
+  --transition: 0.3s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-	font-family: 'Roboto', sans-serif;
-	font-size: 16px;
-	color: #222;
-	background-color: #FaFaFa;
-	text-align: center;
-	line-height: 1.4em;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.5;
 }
 
+/* ============================
+   ANIMATED BACKGROUND ORBS
+   ============================ */
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  animation: float 10s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--orb1);
+  top: -100px;
+  left: -100px;
+}
+
+.orb-2 {
+  width: 500px;
+  height: 500px;
+  background: var(--orb2);
+  bottom: -150px;
+  right: -150px;
+  animation-delay: -5s;
+}
+
+@keyframes float {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    transform: translate(40px, -30px) scale(1.05);
+  }
+}
+
+/* ============================
+   LAYOUT CONTAINER
+   ============================ */
 .container {
-	padding: 0;
-	margin-top: 40px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 650px;
+  padding: 40px 24px;
 }
 
-h3 {
-	margin-top: 30px;
+/* ============================
+   HEADER
+   ============================ */
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeDown 0.6s ease both;
 }
 
-hr {
-	margin: 25px;
+.header-icon {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(255, 123, 114, 0.4));
+  animation: pulse 3s ease-in-out infinite;
 }
 
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.header-title {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+}
+
+.header-subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+
+/* ============================
+   GLASS CARD
+   ============================ */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.card-icon {
+  font-size: 1.4rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+/* ============================
+   ENDPOINTS LIST
+   ============================ */
+.endpoint-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.endpoint-list li {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border);
+  padding: 14px 18px;
+  border-radius: 10px;
+  transition: transform var(--transition), border-color var(--transition);
+}
+
+.endpoint-list li:hover {
+  transform: translateX(4px);
+  border-color: rgba(255, 123, 114, 0.4);
+}
+
+.badge {
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-orange);
+  background: rgba(255, 123, 114, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 123, 114, 0.2);
+}
+
+.endpoint-link {
+  color: var(--text-code);
+  text-decoration: none;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  word-break: break-all;
+  transition: color var(--transition);
+}
+
+.endpoint-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* ============================
+   DIVIDER
+   ============================ */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 32px 0;
+}
+
+/* ============================
+   CODE BOX
+   ============================ */
+.code-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-yellow);
+  border-radius: 8px;
+  padding: 18px 20px;
+  overflow-x: auto;
+}
+
+.code-box code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  color: var(--accent-yellow);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ============================
+   FOOTER
+   ============================ */
 .footer {
-	margin-top: 40px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 32px;
+  animation: fadeUp 0.6s 0.4s ease both;
 }
 
-code {
-	font-family: monospace;
-	padding: 2px;
-	color: black;
-	background-color: #fff;
+.footer a {
+  color: var(--text-code);
+  text-decoration: none;
+  transition: color var(--transition);
 }
 
-ul {
-	list-style-type: none;
+.footer a:hover {
+  color: #fff;
+  text-decoration: underline;
 }
 
-li {
-	margin-bottom: 0.5em;
+/* ============================
+   ANIMATIONS
+   ============================ */
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-a {
-	color: #2574A9;
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================
+   RESPONSIVE
+   ============================ */
+@media (max-width: 500px) {
+  .card {
+    padding: 24px;
+  }
+
+  .endpoint-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }

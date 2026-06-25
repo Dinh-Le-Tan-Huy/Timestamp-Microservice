@@ -1,32 +1,61 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<html>
-   <head>
-      <title>Timestamp Microservice | freeCodeCamp.org</title>
-      <link rel="shortcut icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon-32x32.png" type="image/x-icon"/>
-      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-      <link href="style.css" rel="stylesheet" type="text/css">
-   </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timestamp Microservice | freeCodeCamp.org</title>
+  <meta name="description" content="A freeCodeCamp API project: Timestamp Microservice" />
+  <link rel="shortcut icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon-32x32.png"
+    type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
 
-   <body>
-    <h1>Timestamp Microservice</h1>
-    <hr />
-    <div class="container">
-      <h3>Example Usage:</h3>
-      <ul>
-        <li><a href="api/2015-12-25">[project url]/api/2015-12-25</a></li>
-        <li><a href="api/1451001600000">[project url]/api/1451001600000</a></li>
+<body>
+  <!-- Animated background orbs -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <div class="container">
+    <header class="header">
+      <h1 class="header-title">Timestamp Microservice</h1>
+      <p class="header-subtitle">A simple API to parse natural dates and Unix timestamps.</p>
+    </header>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Example Usage</h2>
+      </div>
+
+      <p class="section-desc">Try making a GET request to these endpoints:</p>
+
+      <ul class="endpoint-list">
+        <li>
+          <span class="badge">Date String</span>
+          <a href="api/2015-12-25" class="endpoint-link">[project_url]/api/2015-12-25</a>
+        </li>
+        <li>
+          <span class="badge">Unix Timestamp</span>
+          <a href="api/1451001600000" class="endpoint-link">[project_url]/api/1451001600000</a>
+        </li>
       </ul>
 
-      <h3>Example Output:</h3>
-      <p>
-        <code>{"unix":1451001600000, "utc":"Fri, 25 Dec 2015 00:00:00 GMT"}</code>
-      </p>
+      <div class="divider"></div>
+
+      <div class="card-header">
+        <h2 class="card-title">Example Output</h2>
+      </div>
+
+      <div class="code-box">
+        <code>{ "unix": 1451001600000, "utc": "Fri, 25 Dec 2015 00:00:00 GMT" }</code>
+      </div>
     </div>
-    <div class="footer">
-      <p>
-        By <a href="https://www.freecodecamp.org/">freeCodeCamp.org</a>
-      </p>
-    </div>
-  </body>
+
+    <footer class="footer">
+      Built by <a href="https://www.freecodecamp.org" target="_blank">freeCodeCamp</a>
+    </footer>
+  </div>
+</body>
+
 </html>
